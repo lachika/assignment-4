@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Implementation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        input, button { margin: 5px 0; display: block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 5px; text-align: left; }
+        #hoverBox { width: 200px; height: 100px; background-color: lightblue; text-align: center; line-height: 100px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Change Text & Style</h2>
+        <p id="text">Click the button to change this text.</p>
+        <button onclick="changeText()">Change Text</button>
+        
+        <h2>Hover Effect</h2>
+        <div id="hoverBox" onmouseover="hoverEffect(true)" onmouseout="hoverEffect(false)">Hover over me</div>
+        
+        <h2>Dynamic List</h2>
+        <input type="text" id="newItem" placeholder="Enter new item">
+        <button onclick="addItem()">Add Item</button>
+        <ul id="dynamicList"></ul>
+    </div>
+
+    <script>
+        function changeText() {
+            let textElement = document.getElementById("text");
+            textElement.innerText = "The text has been changed!";
+            textElement.style.color = "red";
+            textElement.style.fontWeight = "bold";
+        }
+
+        function hoverEffect(isHover) {
+            let box = document.getElementById("hoverBox");
+            if (isHover) {
+                box.style.backgroundColor = "orange";
+                box.innerText = "Hovered!";
+            } else {
+                box.style.backgroundColor = "lightblue";
+                box.innerText = "Hover over me";
+            }
+        }
+
+        function addItem() {
+            let itemText = document.getElementById("newItem").value;
+            if (itemText.trim() !== "") {
+                let list = document.getElementById("dynamicList");
+                let listItem = document.createElement("li");
+                listItem.innerHTML = `${itemText} <button onclick="removeItem(this)">Remove</button>`;
+                list.appendChild(listItem);
+                document.getElementById("newItem").value = "";
+            }
+        }
+
+        function removeItem(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>

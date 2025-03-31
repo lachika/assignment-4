@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Implementation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        input, button { margin: 5px 0; display: block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 5px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BMI Calculator</h2>
+        <input type="number" id="weight" placeholder="Weight in kg">
+        <input type="number" id="height" placeholder="Height in meters">
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <p id="bmiResult"></p>
+        
+        <h2>Temperature Converter</h2>
+        <input type="number" id="temp" placeholder="Enter temperature">
+        <button onclick="convertTemp()">Convert</button>
+        <p id="tempResult"></p>
+        
+        <h2>Dynamic User List</h2>
+        <button onclick="generateUsers()">Generate Users</button>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Name</th></tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            let weight = document.getElementById("weight").value;
+            let height = document.getElementById("height").value;
+            if (weight && height) {
+                let bmi = weight / (height * height);
+                document.getElementById("bmiResult").innerText = `Your BMI is: ${bmi.toFixed(2)}`;
+            } else {
+                document.getElementById("bmiResult").innerText = "Please enter valid values.";
+            }
+        }
+
+        function convertTemp() {
+            let temp = document.getElementById("temp").value;
+            let convertedTemp;
+            if (temp !== "") {
+                let choice = prompt("Convert to (C)elsius or (F)ahrenheit?").toUpperCase();
+                switch (choice) {
+                    case 'C':
+                        convertedTemp = (temp - 32) * 5/9;
+                        document.getElementById("tempResult").innerText = `Temperature in Celsius: ${convertedTemp.toFixed(2)}°C`;
+                        break;
+                    case 'F':
+                        convertedTemp = (temp * 9/5) + 32;
+                        document.getElementById("tempResult").innerText = `Temperature in Fahrenheit: ${convertedTemp.toFixed(2)}°F`;
+                        break;
+                    default:
+                        document.getElementById("tempResult").innerText = "Invalid choice.";
+                }
+            } else {
+                document.getElementById("tempResult").innerText = "Enter a valid temperature.";
+            }
+        }
+
+        function generateUsers() {
+            let users = ["Alice", "Bob", "Charlie", "David", "Eve"];
+            let tableBody = document.getElementById("userTable");
+            tableBody.innerHTML = "";
+            let i = 0;
+            while (i < users.length) {
+                let row = `<tr><td>${i + 1}</td><td>${users[i]}</td></tr>`;
+                tableBody.innerHTML += row;
+                i++;
+            }
+        }
+    </script>
+</body>
+</html>

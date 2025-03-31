@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Objects & AJAX</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 400px; margin: auto; }
+        button { margin: 10px 0; padding: 8px; display: block; }
+        .result { margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Current Date & Time</h2>
+        <p id="dateTime"></p>
+        
+        <h2>Generate Random Number</h2>
+        <button onclick="generateRandom()">Generate</button>
+        <p id="randomNumber" class="result"></p>
+
+        <h2>Fetch Weather Data</h2>
+        <input type="text" id="city" placeholder="Enter city name">
+        <button onclick="fetchWeather()">Get Weather</button>
+        <p id="weatherResult" class="result"></p>
+    </div>
+
+    <script>
+        function showDateTime() {
+            let now = new Date();
+            document.getElementById("dateTime").innerText = now.toLocaleString();
+        }
+        setInterval(showDateTime, 1000);
+        
+        function generateRandom() {
+            let randomNum = Math.floor(Math.random() * 100) + 1;
+            document.getElementById("randomNumber").innerText = `Random Number: ${randomNum}`;
+        }
+        
+        function fetchWeather() {
+            let city = document.getElementById("city").value.trim();
+            if (city === "") {
+                document.getElementById("weatherResult").innerText = "Please enter a city name.";
+                return;
+            }
+            
+            let apiKey = "YOUR_OPENWEATHER_API_KEY";
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        document.getElementById("weatherResult").innerText = 
+                            `Weather in ${data.name}: ${data.weather[0].description}, ${data.main.temp}°C`;
+                    } else {
+                        document.getElementById("weatherResult").innerText = "City not found.";
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("weatherResult").innerText = "Error fetching weather data.";
+                });
+        }
+    </script>
+</body>
+</html>
